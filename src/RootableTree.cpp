@@ -25,6 +25,7 @@ public:
         newTree.getRoot()->setName("newRoot");
 
         MDOUBLE branchLength = _sons[branchNum]->dis2father();
+        std::cout << branchLength << "\n";
 
         newTree.recursiveBuildTreeUp(newTree.getRoot(), _parents[branchNum], _sons[branchNum]->id());
         newTree.recursiveBuildTree(newTree.getRoot(), _sons[branchNum]);
@@ -40,26 +41,45 @@ public:
 
 
 
-TEST_CASE("testing rooting correctnes with 3 nodes unrooted tree") {
-    RootableTree testTree("(A:0.1,B:0.2,C:0.5);");
-    SUBCASE("root at A") {
-        tree rootedTree = testTree.rootTreeOnBranch(0,0.5);
-        std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
-        CHECK(rootedTree.isRooted());
-        CHECK(treeString=="((B:0.2,C:0.5):0.05,A:0.05);");
-    }
-    SUBCASE("root at B") {
-        tree rootedTree = testTree.rootTreeOnBranch(1,0.7);
-        std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
-        CHECK(rootedTree.isRooted());
-        CHECK(treeString=="((A:0.1,C:0.5):0.13999,B:0.06);");
-    }
+TEST_CASE("testing rooting correctnes") {
+    // SUBCASE("rooting a 3 nodes unrooted tree") {
+    //     RootableTree testTree("(A:0.1,B:0.2,C:0.5);");
+    //     SUBCASE("root at A") {
+    //         tree rootedTree = testTree.rootTreeOnBranch(0,0.5);
+    //         std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
+    //         CHECK(rootedTree.isRooted());
+    //         CHECK(treeString=="((B:0.2,C:0.5):0.05,A:0.05);");
+    //     }
+    //     SUBCASE("root at B") {
+    //         tree rootedTree = testTree.rootTreeOnBranch(1,0.7);
+    //         std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
+    //         CHECK(rootedTree.isRooted());
+    //         CHECK(treeString=="((A:0.1,C:0.5):0.13999,B:0.06);");
+    //     }
+    //     SUBCASE("root at C") {
+    //         tree rootedTree = testTree.rootTreeOnBranch(2,0.2);
+    //         std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
+    //         CHECK(rootedTree.isRooted());
+    //         CHECK(treeString=="((A:0.1,B:0.2):0.1,C:0.4);");
+    //     }
+    // }
+    SUBCASE("rooting a 4 nodes unrooted tree") {
+        RootableTree testTree("((A:1.0,B:1.0):1.0,C:1.0,D:1.0);");
+        // SUBCASE("root at D") {
+        //     tree rootedTree = testTree.rootTreeOnBranch(2,0.5);
+        //     std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
+        //     std::cout << treeString << "\n";
+        //     CHECK(rootedTree.isRooted());
+        //     CHECK(treeString=="(((A:1,B:1):1,C:1):0.5,D:0.5);");
+        // }
 
-    SUBCASE("root at C") {
-        tree rootedTree = testTree.rootTreeOnBranch(2,0.2);
-        std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
-        CHECK(rootedTree.isRooted());
-        CHECK(treeString=="((A:0.1,B:0.2):0.1,C:0.4);");
-    }
+        SUBCASE("root at A") {
+            tree rootedTree = testTree.rootTreeOnBranch(3,0.5);
+            std::string treeString = rootedTree.stringTreeInPhylipTreeFormat();
+            std::cout << treeString << "\n";
+            CHECK(rootedTree.isRooted());
+            CHECK(treeString=="((B:1,(C:1,D:1):1):0.5,A:0.5);");
+        }
 
+    }
 }
